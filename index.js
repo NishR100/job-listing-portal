@@ -1,5 +1,6 @@
 // include the application dependencies
 require('./db-connection')();
+
 const express = require('express');
 const jobs = require('./route');
 const app = express();
