@@ -1,5 +1,4 @@
 const API_URL = `${window.location.href}jobs`;
-console.log(API_URL);
 (async () => {
     const jobs = await getJobs();
     reloadJobs(jobs);
