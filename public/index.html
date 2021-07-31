@@ -11,21 +11,54 @@
 </head>
 
 <body>
-    <div id="container">
-        <div class="row mt-30">
+    <div id="container" style="padding: 30px;">
+        <div class="row mt-20">
             <div class="col">
                 <h1>Job Listing Portal</h1>
             </div>
         </div>
-        <div class="row mt-20">
+        <div class="row mt-10">
             <div class="col text-right">
-                <button class="btn btn-primary">Create Job</button>
+                <button class="btn btn-primary" id="btn-create">Create Job</button>
             </div>
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="modal-job">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create Job</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="txt-id" />
+                <div class="form-group">
+                    <label>Title</label>
+                    <input id="txt-title" class="form-control" placeholder="Title" />
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input id="txt-description" class="form-control" placeholder="Description" />
+                </div>
+                <div class="form-group">
+                    <label>Skills</label>
+                    <input id="txt-skills" class="form-control" placeholder="Skills" />
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="btn-save-changes">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="./index.js"></script>
 </body>
 
 </html>
