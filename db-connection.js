@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 module.exports = () => {
     // get connection string from .env file
     // and connect with it using Mongoose driver
-    
     mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useCreateIndex: true,
         useNewUrlParser: true,
