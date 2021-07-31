@@ -1,5 +1,10 @@
 const API_URL = `${window.location.href}jobs`;
 
+(async () => {
+    const jobs = await getJobs();
+    reloadJobs(jobs);
+})();
+
 $('#btn-create').click(e => {
     $('#modal-job').modal('show');
 });
@@ -25,10 +30,12 @@ $('#btn-save-changes').click(e => {
             dateCreated: moment().format(),
             dateUpdated: moment().format()
         };
-        await axios.post(API_URL, data)
-            .then(response => {
+        axios.post(API_URL, data)
+            .then(async response => {
                 if (response.status === 200) {
                     $('#modal-job').modal('hide');
+                    const jobs = await getJobs();
+                    reloadJobs(jobs);
                 }
             })
             .catch(err => {
@@ -42,4 +49,37 @@ function clearForm() {
     $('#txt-title').val("");
     $('#txt-description').val("");
     $('#txt-skills').val("");
+}
+
+function getJobs() {
+    return new Promise((resolve, reject) => {
+        axios.get(API_URL)
+            .then(response => {
+                if (response.status === 200) {
+                    resolve(response.data);
+                }
+            })
+            .catch(err => {
+                reject(err.response.data);
+            });
+    });
+}
+
+function reloadJobs(arr) {
+    if(arr.length === 0) {
+        $('#tbl-data').html(`<tr class="text-center"><td colspan="4">No jobs found.</td></tr>`);
+        return;
+    }
+
+    let html = ``;
+    arr.forEach(job => {
+        html += `<tr>
+            <td>${job.title}</td>
+            <td>${job.description}</td>
+            <td>${job.skills}</td>
+            <td>${moment(job.dateCreated).format("DD-MMM-YYYY")}</td>
+        </tr>`;
+    });
+
+    $('#tbl-data').html(html);
 }
