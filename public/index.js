@@ -107,6 +107,21 @@ async function editJob(id) {
     $('#modal-job').modal('show');
 }
 
+function deleteJob(id) {
+    if(confirm(`Are you sure you want to delete it?`)) {
+        axios.delete(`${API_URL}/${id}`)
+            .then(async response => {
+                if (response.status === 200) {
+                    const jobs = await getJobs();
+                    reloadJobs(jobs);
+                }
+            })
+            .catch(err => {
+                reject(err.response.data);
+            });
+    }
+}
+
 function reloadJobs(arr) {
     if(arr.length === 0) {
         $('#tbl-data').html(`<tr class="text-center"><td colspan="5">No jobs found.</td></tr>`);
@@ -122,7 +137,7 @@ function reloadJobs(arr) {
             <td>${moment(job.dateCreated).format("DD-MMM-YYYY")}</td>
             <td>
                 <button class="btn btn-sm btn-primary" onclick="editJob('${job._id}')">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteJob('${job._id}')">Delete</button>
             </td>
         </tr>`;
     });
