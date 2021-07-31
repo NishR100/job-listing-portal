@@ -21,6 +21,23 @@ $('#btn-save-changes').click(e => {
 
     if (id && id.length > 0) {
         // udpate
+        let data = {
+            title,
+            description,
+            skills,
+            dateUpdated: moment().format()
+        };
+        axios.post(`${API_URL}/${id}`, data)
+            .then(async response => {
+                if (response.status === 200) {
+                    $('#modal-job').modal('hide');
+                    const jobs = await getJobs();
+                    reloadJobs(jobs);
+                }
+            })
+            .catch(err => {
+                alert(`Error: ${err.response.data}`);
+            });
     } else {
         // create
         let data = {
@@ -45,6 +62,7 @@ $('#btn-save-changes').click(e => {
 });
 
 function clearForm() {
+    $("#modal-title").html("Create Job");
     $('#txt-id').val("");
     $('#txt-title').val("");
     $('#txt-description').val("");
@@ -65,19 +83,47 @@ function getJobs() {
     });
 }
 
+function getJob(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${API_URL}/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    resolve(response.data);
+                }
+            })
+            .catch(err => {
+                reject(err.response.data);
+            });
+    });
+}
+
+async function editJob(id) {
+    let job = await getJob(id);
+    $("#modal-title").html("Update Job");
+    $('#txt-id').val(job._id);
+    $('#txt-title').val(job.title);
+    $('#txt-description').val(job.description);
+    $('#txt-skills').val(job.skills);
+    $('#modal-job').modal('show');
+}
+
 function reloadJobs(arr) {
     if(arr.length === 0) {
-        $('#tbl-data').html(`<tr class="text-center"><td colspan="4">No jobs found.</td></tr>`);
+        $('#tbl-data').html(`<tr class="text-center"><td colspan="5">No jobs found.</td></tr>`);
         return;
     }
 
     let html = ``;
     arr.forEach(job => {
         html += `<tr>
-            <td>${job.title}</td>
-            <td>${job.description}</td>
-            <td>${job.skills}</td>
+            <td class="text-left">${job.title}</td>
+            <td class="text-left">${job.description}</td>
+            <td class="text-left">${job.skills}</td>
             <td>${moment(job.dateCreated).format("DD-MMM-YYYY")}</td>
+            <td>
+                <button class="btn btn-sm btn-primary" onclick="editJob('${job._id}')">Edit</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
         </tr>`;
     });
 

@@ -38,6 +38,14 @@ const Manager = {
 
         // return deletion results
         return t;
+    },
+    // get a job by its ID
+    getById: async id => {
+        const t = await Job.findById(id);
+        if (t === null) return false;
+
+        // return found results
+        return t;
     }
 };
 

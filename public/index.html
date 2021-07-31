@@ -25,12 +25,13 @@
         <div class="row mt-10 text-center">
             <div class="col">
                 <div class="table-responsive">
-                <table class="table w-100 table-striped table-bordered table-hover">
+                <table class="table w-100 table-sm table-striped table-bordered table-hover">
                     <thead>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Skills</th>
+                    <th class="text-left">Title</th>
+                    <th class="text-left">Description</th>
+                    <th class="text-left">Skills</th>
                     <th>Date Created</th>
+                    <th>Options</th>
                     </thead>
                     <tbody id="tbl-data"></tbody>
                 </table>
@@ -42,7 +43,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Create Job</h5>
+              <h5 class="modal-title" id="modal-title">Create Job</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

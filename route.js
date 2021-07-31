@@ -59,4 +59,18 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// GET - get a job by its ID
+router.get('/:id', async (req, res) => {
+    try {
+        // getting request parameter
+        const id = req.params.id;
+        // calling manager method to get a job with its ID
+        const r = await jobManager.getById(id);
+        // return results to response
+        return res.status(200).send(r);
+    } catch (ex) {
+        return res.status(500).send(ex.message);
+    }
+});
+
 module.exports = router;
