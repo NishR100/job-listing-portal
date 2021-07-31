@@ -2,3 +2,7 @@ body {overflow-x: hidden;}
 .mt-30 { margin-top: 30px;}
 .mt-20 { margin-top: 20px;}
 .mt-10 { margin-top: 10px;}
+.icon { margin-right: 10px; color: purple;}
+.heading {color: purple;}
+.icon:hover {color: #a00ab8;}
+.heading:hover {color: #a00ab8;}
